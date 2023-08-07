@@ -1,0 +1,4 @@
+requests==2.31.0
+pyjwt==2.6.0
+vantage6-client==3.10.4
+pandas==1.5.3
