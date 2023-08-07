@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+""" Sample code to test the federated algorithm with a mock client
+"""
 import os
 from vantage6.tools.mock_client import ClientMockProtocol
 
 
-# Mock client
+# Start mock client
 data_dir = os.path.join(os.getcwd(), 'v6_healthai_dashboard_py', 'local')
 client = ClientMockProtocol(
     datasets=[
@@ -14,13 +16,13 @@ client = ClientMockProtocol(
     module='v6_healthai_dashboard_py'
 )
 
-# Check organisations
+# Get mock organisations
 organizations = client.get_organizations_in_my_collaboration()
 print(organizations)
 ids = [organization['id'] for organization in organizations]
 
 # Check partial method
-task = client.create_new_task(
+partial_task = client.create_new_task(
     input_={
         'method': 'statistics_partial',
         'kwargs': {
@@ -30,15 +32,13 @@ task = client.create_new_task(
     },
     organization_ids=ids
 )
-print(task)
-
-results = client.get_results(task.get('id'))
+results = client.get_results(partial_task.get('id'))
 print(results)
 
 # Check master method
 master_task = client.create_new_task(
     input_={
-        'master': 1,
+        'master': True,
         'method': 'master',
         'kwargs': {
             'org_ids': [1],

@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
+""" Setup v6_healthai_dashboard_py as a package
+"""
 from os import path
 from codecs import open
 from setuptools import setup, find_packages
+
 
 # Get current directory
 here = path.abspath(path.dirname(__file__))
@@ -13,7 +16,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 # Setup the package
 setup(
-    name='v6-healthai-dashboard-py',
+    name='v6_healthai_dashboard_py',
     version='1.0.0',
     description='HealthAI: vantage6 algorithm to compute TNM statistics',
     long_description=long_description,

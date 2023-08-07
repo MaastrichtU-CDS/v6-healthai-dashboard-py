@@ -2,12 +2,8 @@
 FROM harbor2.vantage6.ai/infrastructure/algorithm-base:3.4.2
 
 
-# This is a placeholder that should be overloaded by invoking
-# docker build with '--build-arg PKG_NAME=...'
-ARG PKG_NAME="v6-healthai-dashboard-py"
-
-RUN apt-get update
-RUN apt-get install -y apt-utils gcc libpq-dev wget iputils-ping
+# Package name
+ARG PKG_NAME="v6_healthai_dashboard_py"
 
 # Install federated algorithm
 COPY . /app

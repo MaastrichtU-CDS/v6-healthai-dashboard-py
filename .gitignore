@@ -106,5 +106,11 @@ venv.bak/
 .vscode/
 .idea/
 
+# Image repositories
 .github/
 docker_hub.sh
+
+# Input and output
+v6_healthai_dashboard_py/local/input
+v6_healthai_dashboard_py/local/output
+v6_healthai_dashboard_py/local/token
