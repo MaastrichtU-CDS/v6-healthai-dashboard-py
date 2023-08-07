@@ -45,6 +45,9 @@ and adhering to the following standard:
 }
 ```
 
+The files `data1.csv` and `data2.csv` in the directory
+`v6_healthai_dashboard_py/local` are examples.
+
 ## Using the algorithm
 
 Below you can see an example of how to run the algorithm:
@@ -88,6 +91,19 @@ while not task_info.get('complete'):
 result_info = client.result.list(task=task_info['id'])
 results = result_info['data'][0]['result']
 ```
+
+## Testing locally
+
+If you wish to test the algorithm locally, you can create a Python virtual 
+environment, using your favourite method, and do the following:
+
+``` bash
+source .venv/bin/activate
+pip install -e .
+python v6_healthai_dashboard_py/example.py
+```
+
+The algorithm was developed and tested with Python 3.10.
 
 ## Acknowledgments
 
