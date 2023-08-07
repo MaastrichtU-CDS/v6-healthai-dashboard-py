@@ -16,9 +16,10 @@ import json
 import pandas
 
 from vantage6.tools.util import info, warn
+from v6_healthai_dashboard_py.survival import survival_rate
 
 
-def master(client, data, org_ids=None):
+def master(client, data, org_ids=None, cutoff=730, delta=30):
     """Master algorithm.
 
     The master algorithm is the chair of the Round Robin, which makes
@@ -37,7 +38,8 @@ def master(client, data, org_ids=None):
     # in this case
     info('Defining input parameters')
     input_ = {
-        'method': 'statistics_partial'
+        'method': 'statistics_partial',
+        'kwargs': {'cutoff': cutoff, 'delta': delta},
     }
 
     # Create a new task for all organizations in the collaboration
@@ -67,7 +69,7 @@ def master(client, data, org_ids=None):
 
     return results
 
-def RPC_statistics_partial(data):
+def RPC_statistics_partial(data, cutoff, delta):
     """ TNM statistics for dashboard
     """
     info('Counting number of unique ids')
@@ -80,9 +82,13 @@ def RPC_statistics_partial(data):
     info('Counting number of unique ids per vital status')
     vital_status = data.groupby(['vital_status'])['id'].nunique().reset_index()
 
+    info('Getting survival rates')
+    survival = survival_rate(data, cutoff, delta)
+
     return {
         'organisation': organisation,
         'nids': nids,
         'stages': stages.to_dict(),
-        'vital_status': vital_status.to_dict()
+        'vital_status': vital_status.to_dict(),
+        'survival': survival
     }

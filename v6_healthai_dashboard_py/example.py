@@ -5,13 +5,13 @@ from vantage6.tools.mock_client import ClientMockProtocol
 
 
 # Mock client
-data_dir = os.path.join(os.getcwd(), 'v6-healthai-dashboard-py', 'local')
+data_dir = os.path.join(os.getcwd(), 'v6_healthai_dashboard_py', 'local')
 client = ClientMockProtocol(
     datasets=[
         os.path.join(data_dir, 'data1.csv'),
         os.path.join(data_dir, 'data2.csv')
     ],
-    module='v6-healthai-dashboard-py'
+    module='v6_healthai_dashboard_py'
 )
 
 # Check organisations
@@ -21,7 +21,13 @@ ids = [organization['id'] for organization in organizations]
 
 # Check partial method
 task = client.create_new_task(
-    input_={'method': 'statistics_partial'},
+    input_={
+        'method': 'statistics_partial',
+        'kwargs': {
+            'cutoff': 730,
+            'delta': 30
+        }
+    },
     organization_ids=ids
 )
 print(task)
@@ -31,7 +37,15 @@ print(results)
 
 # Check master method
 master_task = client.create_new_task(
-    input_={'master': 1, 'method': 'master', 'kwargs': {'org_ids': [1]}},
+    input_={
+        'master': 1,
+        'method': 'master',
+        'kwargs': {
+            'org_ids': [1],
+            'cutoff': 730,
+            'delta': 30
+        }
+    },
     organization_ids=[1]
 )
 results = client.get_results(master_task.get('id'))
