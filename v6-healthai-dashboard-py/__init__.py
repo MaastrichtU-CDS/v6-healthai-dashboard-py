@@ -77,8 +77,12 @@ def RPC_statistics_partial(data):
     info('Counting number of unique ids per stage')
     stages = data.groupby(['stage'])['id'].nunique().reset_index()
 
+    info('Counting number of unique ids per vital status')
+    vital_status = data.groupby(['vital_status'])['id'].nunique().reset_index()
+
     return {
         'organisation': organisation,
         'nids': nids,
-        'stages': stages.to_dict()
+        'stages': stages.to_dict(),
+        'vital_status': vital_status.to_dict()
     }
