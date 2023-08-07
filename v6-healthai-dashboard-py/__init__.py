@@ -71,7 +71,14 @@ def RPC_statistics_partial(data):
     """ TNM statistics for dashboard
     """
     info('Counting number of unique ids')
-    nids = data['id'].nunique()
     organisation = data['centre'].unique()[0]
+    nids = data['id'].nunique()
 
-    return {'nids': nids, 'organisation': organisation}
+    info('Counting number of unique ids per stage')
+    stages = data.groupby(['stage'])['id'].nunique().reset_index()
+
+    return {
+        'organisation': organisation,
+        'nids': nids,
+        'stages': stages.to_dict()
+    }
