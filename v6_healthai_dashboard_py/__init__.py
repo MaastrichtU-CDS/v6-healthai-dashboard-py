@@ -46,7 +46,7 @@ def master(
     # as this is encoded in the JWT (Bearer token)
     info('Collecting participating organizations')
     organizations = client.get_organizations_in_my_collaboration()
-    ids = [organization.get('id') for organization in organizations \
+    ids = [organization.get('id') for organization in organizations
            if not org_ids or organization.get('id') in org_ids]
 
     # The input for the algorithm, which is the same for all organizations
@@ -79,7 +79,7 @@ def master(
     # Organising partial results, we do not perform aggregations as we need
     # the data per centre for the dashboard
     info('Master algorithm complete')
-    info(f'Result: %s' % results)
+    info(f'Result: {results}')
 
     return results
 
