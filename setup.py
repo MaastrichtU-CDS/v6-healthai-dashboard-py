@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-""" Setup v6_healthai_dashboard_py as a package
+""" Setup v6_healthai_dashboard_py as a Python package
 """
 from os import path
 from codecs import open
@@ -22,6 +22,8 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/aiaragomes/v6-healthai-dashboard-py',
+    license='MIT License',
+    keywords=['Vantage6', 'Federated Algorithms'],
     packages=find_packages(),
     python_requires='>=3.7',
     install_requires=[
