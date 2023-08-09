@@ -107,7 +107,6 @@ venv.bak/
 .idea/
 
 # Image repositories
-.github/
 docker_hub.sh
 
 # Input and output
