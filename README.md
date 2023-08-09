@@ -15,33 +15,33 @@ and adhering to the following standard:
 
 ``` json
 {
-    'id': {
-        'description': 'patient identifier',
-        'type': 'string'
-    },
-    'stage': {
-        'description': 'patient overall stage',
-        'type': 'categorical'
-    }, 
-    'date_of_diagnosis': {
-        'description': 'date the patient was diagnosed',
-        'type': 'string',
-        'format': '%Y-%m-%d'
-    },
-    'date_of_fu': {
-        'description': 'date the patient had the last follow up visit',
-        'type': 'string',
-        'format': '%Y-%m-%d'
-    },
-    'vital_status': {
-        'description': 'patient vital status',
-        'type': 'categorical',
-        'values': ['alive', 'dead']
-    },
-    'centre': {
-        'description': 'hospital identifier',
-        'type': 'string'
-    } 
+'id': {
+    'description': 'patient identifier',
+    'type': 'string'
+},
+'stage': {
+    'description': 'patient overall stage',
+    'type': 'categorical'
+}, 
+'date_of_diagnosis': {
+    'description': 'date the patient was diagnosed',
+    'type': 'string',
+    'format': '%Y-%m-%d'
+},
+'date_of_fu': {
+    'description': 'date the patient had the last follow up visit',
+    'type': 'string',
+    'format': '%Y-%m-%d'
+},
+'vital_status': {
+    'description': 'patient vital status',
+    'type': 'categorical',
+    'values': ['alive', 'dead']
+},
+'centre': {
+    'description': 'hospital identifier',
+    'type': 'string'
+} 
 }
 ```
 
