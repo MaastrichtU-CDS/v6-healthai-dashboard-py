@@ -21,7 +21,7 @@ setup(
     description='HealthAI: vantage6 algorithm to compute TNM statistics',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/aiaragomes/v6-healthai-dashboard-py',
+    url='https://github.com/MaastrichtU-CDS/v6-healthai-dashboard-py',
     license='MIT License',
     keywords=['Vantage6', 'Federated Algorithms'],
     packages=find_packages(),
