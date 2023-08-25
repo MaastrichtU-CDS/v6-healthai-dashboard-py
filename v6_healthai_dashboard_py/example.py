@@ -41,12 +41,12 @@ master_task = client.create_new_task(
         'master': True,
         'method': 'master',
         'kwargs': {
-            'org_ids': [1],
+            'org_ids': [0, 1],
             'cutoff': 730,
             'delta': 30
         }
     },
-    organization_ids=[1]
+    organization_ids=[0, 1]
 )
 results = client.get_results(master_task.get('id'))
 print(results)

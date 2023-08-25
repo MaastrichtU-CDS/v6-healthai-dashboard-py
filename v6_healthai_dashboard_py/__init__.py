@@ -36,7 +36,7 @@ def master(
 
     Returns
     -------
-    results
+    final_results
         Dictionary with the final orchestrated result
     """
 
@@ -48,6 +48,8 @@ def master(
     organizations = client.get_organizations_in_my_collaboration()
     ids = [organization.get('id') for organization in organizations
            if not org_ids or organization.get('id') in org_ids]
+    names = [organization.get('name') for organization in organizations
+             if not org_ids or organization.get('id') in org_ids]
 
     # The input for the algorithm, which is the same for all organizations
     info('Defining input parameters')
@@ -79,9 +81,13 @@ def master(
     # Organising partial results, we do not perform aggregations as we need
     # the data per centre for the dashboard
     info('Master algorithm complete')
-    info(f'Result: {results}')
+    final_results = []
+    for name, result in zip(names, results):
+        if not result['organisation']:
+            result['organisation'] = name
+        final_results.append(result)
 
-    return results
+    return final_results
 
 
 def RPC_statistics_partial(data, cutoff, delta):
@@ -102,10 +108,14 @@ def RPC_statistics_partial(data, cutoff, delta):
         Dictionary with the partial result
     """
     info('Counting number of unique ids')
-    organisation = data['centre'].unique()[0]
+    if 'centre' in data.columns:
+        organisation = data['centre'].unique()[0]
+    else:
+        organisation = None
     nids = data['id'].nunique()
 
     info('Counting number of unique ids per stage')
+    data['stage'] = data['stage'].str.upper()
     stages = data.groupby(['stage'])['id'].nunique().reset_index()
 
     info('Counting number of unique ids per vital status')
