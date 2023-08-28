@@ -13,7 +13,7 @@ architecture. It computes the following statistics:
 The algorithm expects each data node to hold a `csv` with the following data 
 and adhering to the following standard:
 
-``` 
+``` json 
 {
     "id": {
         "description": "patient identifier",
