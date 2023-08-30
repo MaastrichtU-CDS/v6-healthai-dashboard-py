@@ -83,8 +83,7 @@ def master(
     info('Master algorithm complete')
     final_results = []
     for name, result in zip(names, results):
-        if not result['organisation']:
-            result['organisation'] = name
+        result['organisation'] = name
         final_results.append(result)
 
     return final_results
@@ -107,27 +106,41 @@ def RPC_statistics_partial(data, cutoff, delta):
     results
         Dictionary with the partial result
     """
+    # Initialising results dictionary
+    results = {'logs': ''}
+
     info('Counting number of unique ids')
-    if 'centre' in data.columns:
-        organisation = data['centre'].unique()[0]
+    column = 'id'
+    if column in data.columns:
+        nids = data[column].nunique()
+        results['nids'] = nids
     else:
-        organisation = None
-    nids = data['id'].nunique()
+        results['logs'] += f'Column {column} not found in the data\n'
 
     info('Counting number of unique ids per stage')
-    data['stage'] = data['stage'].str.upper()
-    stages = data.groupby(['stage'])['id'].nunique().reset_index()
+    column = 'stage'
+    if column in data.columns:
+        data[column] = data[column].str.upper()
+        stages = data.groupby([column])['id'].nunique().reset_index()
+        results[column] = stages.to_dict()
+    else:
+        results['logs'] += f'Column {column} not found in the data'
 
     info('Counting number of unique ids per vital status')
-    vital_status = data.groupby(['vital_status'])['id'].nunique().reset_index()
+    column = 'vital_status'
+    if column in data.columns:
+        vital_status = data.groupby([column])['id'].nunique().reset_index()
+        results[column] = vital_status.to_dict()
+    else:
+        results['logs'] += f'Column {column} not found in the data'
 
     info('Getting survival rates')
-    survival = survival_rate(data, cutoff, delta)
+    columns = ['date_of_diagnosis', 'date_of_fu']
+    if (columns[0] in data.columns) and (columns[1] in data.columns):
+        survival = survival_rate(data, cutoff, delta)
+        results['survival'] = survival
+    else:
+        results['logs'] += \
+            f'Columns {columns[0]} and/or {columns[1]} not found in the data'
 
-    return {
-        'organisation': organisation,
-        'nids': nids,
-        'stages': stages.to_dict(),
-        'vital_status': vital_status.to_dict(),
-        'survival': survival
-    }
+    return results
