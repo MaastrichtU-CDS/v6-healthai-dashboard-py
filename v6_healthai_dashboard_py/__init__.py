@@ -77,6 +77,7 @@ def master(
     # Collecting results
     info('Obtaining results')
     results = client.get_results(task_id=task.get('id'))
+    info(f'Results: {results}')
 
     # Organising partial results, we do not perform aggregations as we need
     # the data per centre for the dashboard
@@ -87,6 +88,7 @@ def master(
         if not result['organisation']:
             result['organisation'] = f'Centre {i}'
         final_results.append(result)
+    info(f'Results: {results}')
 
     return final_results
 
@@ -117,6 +119,7 @@ def RPC_statistics_partial(data, cutoff, delta):
         centre = data[column].unique()[0]
         results['organisation'] = centre
     else:
+        results['organisation'] = None
         results['logs'] += f'Column {column} not found in the data\n'
 
     info('Counting number of unique ids')
