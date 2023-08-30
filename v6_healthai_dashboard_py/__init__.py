@@ -80,10 +80,12 @@ def master(
 
     # Organising partial results, we do not perform aggregations as we need
     # the data per centre for the dashboard
+    # TODO: how to get centre name from v6 client?
     info('Master algorithm complete')
     final_results = []
-    for name, result in zip(names, results):
-        result['organisation'] = name
+    for i, result in enumerate(results):
+        if not result['organisation']:
+            result['organisation'] = f'Centre {i}'
         final_results.append(result)
 
     return final_results
@@ -108,6 +110,14 @@ def RPC_statistics_partial(data, cutoff, delta):
     """
     # Initialising results dictionary
     results = {'logs': ''}
+
+    info('Getting centre name')
+    column = 'centre'
+    if column in data.columns:
+        centre = data[column].unique()[0]
+        results['organisation'] = centre
+    else:
+        results['logs'] += f'Column {column} not found in the data\n'
 
     info('Counting number of unique ids')
     column = 'id'
