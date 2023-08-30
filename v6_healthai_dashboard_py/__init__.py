@@ -48,8 +48,8 @@ def master(
     organizations = client.get_organizations_in_my_collaboration()
     ids = [organization.get('id') for organization in organizations
            if not org_ids or organization.get('id') in org_ids]
-    names = [organization.get('name') for organization in organizations
-             if not org_ids or organization.get('id') in org_ids]
+    # names = [organization.get('name') for organization in organizations
+    #          if not org_ids or organization.get('id') in org_ids]
 
     # The input for the algorithm, which is the same for all organizations
     info('Defining input parameters')
@@ -77,18 +77,16 @@ def master(
     # Collecting results
     info('Obtaining results')
     results = client.get_results(task_id=task.get('id'))
-    info(f'Results: {results}')
 
     # Organising partial results, we do not perform aggregations as we need
     # the data per centre for the dashboard
-    # TODO: how to get centre name from v6 client?
+    # TODO: how to get centre name from the v6 client?
     info('Master algorithm complete')
     final_results = []
     for i, result in enumerate(results):
         if not result['organisation']:
             result['organisation'] = f'Centre {i}'
         final_results.append(result)
-    info(f'Results: {results}')
 
     return final_results
 
